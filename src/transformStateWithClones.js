@@ -9,12 +9,8 @@
 function transformStateWithClones(state, actions) {
   const history = [];
 
-  let lastHistory = state;
-
+  let lastHistory = {...state};
   for (const action of actions) {
-    history.push({ ...lastHistory });
-    lastHistory = history[history.length - 1];
-
     switch (action.type) {
       case 'addProperties':
         Object.assign(lastHistory, action.extraData);
@@ -25,11 +21,10 @@ function transformStateWithClones(state, actions) {
         }
         break;
       case 'clear':
-        for (const key in lastHistory) {
-          delete lastHistory[key];
-        }
+        lastHistory = {};
         break;
     }
+    history.push({ ...lastHistory });
   }
 
   return history;
