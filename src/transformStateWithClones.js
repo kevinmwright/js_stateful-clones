@@ -19,6 +19,7 @@ function transformStateWithClones(state, actions) {
       case 'removeProperties':
         for (const key of action.keysToRemove) {
           const { [key]: _, ...rest } = lastHistory;
+
           lastHistory = rest;
         }
         break;
